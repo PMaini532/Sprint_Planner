@@ -1,0 +1,16 @@
+# .gitignore
+
+# Node
+node_modules/
+.env
+
+# React
+client/node_modules/
+client/.env
+build/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
