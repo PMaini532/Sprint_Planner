@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { loginUser } from "../api";
 import { useNavigate, Link } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -13,11 +14,16 @@ export default function LoginPage() {
     const res = await loginUser(email, password);
     if (res.token) {
       localStorage.setItem("token", res.token);
+      const decoded = jwtDecode(res.token);
       setMessage("Login successful!");
-      navigate("/dashboard"); // future page
-    } else {
-      setMessage(res.error || "Login failed");
-    }
+      if (decoded.role === "admin") {
+      navigate("/admin");  // Replace with your actual admin route
+      }else {
+        navigate("/dashboard"); // Developer route
+      }
+      } else {
+        setMessage(res.error || "Login failed");
+      }
   };
 
   return (

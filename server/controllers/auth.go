@@ -31,6 +31,10 @@ func Register(c *gin.Context) {
 	}
 	input.Password = string(hashedPassword)
 
+	if input.Role == "" {
+		input.Role = "developer"
+	}
+
 	// Save user
 	if err := database.DB.Create(&input).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "User already exists"})
@@ -62,6 +66,7 @@ func Login(c *gin.Context) {
 	// Generate JWT
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"user_id": dbUser.ID,
+		"role":    dbUser.Role,
 		"exp":     time.Now().Add(time.Hour * 72).Unix(),
 	})
 
