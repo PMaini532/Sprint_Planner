@@ -1,14 +1,20 @@
 import React from "react";
-import LoginForm from "./components/LoginForm";
-import RegisterForm from "./components/RegisterForm";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/ReagisterPage";
+import "./index.css";
 
 function App() {
   return (
-    <div>
-      <h1>Sprint Planner</h1>
-      <RegisterForm />
-      <LoginForm />
-    </div>
+    <Router>
+      <div className="container">
+        <Routes>
+          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
