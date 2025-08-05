@@ -25,5 +25,6 @@ func main() {
         })
     })
     routes.AuthRoutes(r)
+    routes.UserRoutes(r)
     r.Run(":8080")
 }
